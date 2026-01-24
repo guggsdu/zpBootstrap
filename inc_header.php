@@ -1,5 +1,5 @@
 <?php
-// force UTF-8 Ø
+// force UTF-8 Ã˜
 if (!defined('WEBPATH')) die();
 ?>
 <!DOCTYPE html>
@@ -8,7 +8,9 @@ if (!defined('WEBPATH')) die();
 	<meta charset="<?php echo getOption('charset'); ?>">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 	<?php
-	if ( !((($_zp_gallery_page == 'pages.php') && (getPageTitleLink() == 'map')) || ($_zp_gallery_page == 'album.php')) ) {
+    // Keep map scripts on pages that can show a map (album, image, favorites, or Zenpage map page).
+	// Removing them on other pages avoids loading Leaflet/GoogleMap when not needed.
+	if ( !((($_zp_gallery_page == 'pages.php') && (getPageTitleLink() == 'map')) || ($_zp_gallery_page == 'album.php') || ($_zp_gallery_page == 'image.php') || ($_zp_gallery_page == 'favorites.php')) ) {
 		zp_remove_filter('theme_head', 'GoogleMap::js');
 		zp_remove_filter('theme_head', 'openStreetMap::scripts');
 	}
