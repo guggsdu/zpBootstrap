@@ -1,17 +1,17 @@
 			<?php
 			$hasAlbumGeodata = false;
 			$album = $_zp_current_album;
-			$images = $album->getImages();
+			$images = $album->getImages(0, 0, null, null, false);
 
 			foreach ($images as $an_image) {
-				$image = newImage($album, $an_image);
-				$exif = $image->getMetaData();
-				if ((!empty($exif['EXIFGPSLatitude'])) && (!empty($exif['EXIFGPSLongitude']))) {
-					$hasAlbumGeodata = true; // at least one image has geodata
+				$image = Image::newImage($album, $an_image);
+				if ($image->getGeodata()) {
+					$hasAlbumGeodata = true;
+					break;
 				}
 			}
 
-			// display map only if they are geodata
+			// display map only if there is geodata
 			if ($hasAlbumGeodata == true) {
 				?>
 				<div class="osm_panel panel panel-default">
@@ -21,7 +21,7 @@
 						</h4>
 					</div>
 					<div class="panel-body">
-						<?php printOpenStreetMap(); ?>
+						<?php openStreetMap::printOpenStreetMap(); ?>
 					</div>
 				</div>
 				<?php
