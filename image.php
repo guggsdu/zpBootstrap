@@ -66,6 +66,26 @@
 			<?php } ?>
 		</div>
 
+        <?php 
+		// NEW CODE: Added OpenStreetMap map display for single images
+		// OLD CODE: This section did not exist - image.php had no map display
+		if (extensionEnabled('openstreetmap') && $_zp_current_image->getGeodata()) { ?>
+		<div class="row">
+			<div class="col-sm-offset-2 col-sm-8">
+				<div class="osm_panel panel panel-default">
+					<div class="panel-heading">
+						<h4 class="panel-title">
+							<span class="glyphicon glyphicon-map-marker"></span>&nbsp;<?php echo gettext('Map'); ?>
+						</h4>
+					</div>
+					<div class="panel-body">
+						<?php openStreetMap::printOpenStreetMap(); ?>
+					</div>
+				</div>
+			</div>
+		</div>
+		<?php } ?>
+			
 		<?php if ((zp_loggedin()) && (extensionEnabled('favoritesHandler'))) { ?>
 		<div class="row">
 			<div class="col-sm-offset-2 col-sm-8 photo-infos favorites">
